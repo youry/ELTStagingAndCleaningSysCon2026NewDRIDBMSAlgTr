@@ -1,0 +1,209 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line only needs to identify funding in the first footnote. If that is unnecessary, please comment on it.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{balance}
+\usepackage{makecell}
+\usepackage{hyperref}
+\usepackage{url} %for URLs
+\usepackage{listings} %for code
+\usepackage{float}
+% \usepackage{multirow}
+
+%% Code listing style set
+\lstset{frame=none,
+%   language=SQL,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{purple},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=4
+}
+
+\usepackage[letterpaper,%
+            left=0.75in,right=0.75in,top=0.75in,bottom=1in,%
+            footskip=.25in,bindingoffset=0.2in]{geometry}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\setlength{\columnsep}{0.25in}
+\begin{document}
+
+\makeatletter
+\newcommand{\linebreakand}{%
+ \end{@IEEEauthorhalign}
+ \hfill\mbox{}\par
+ \mbox{}\hfill\begin{@IEEEauthorhalign}
+}
+\makeatother
+
+\title{Digital Research Alliance of Canada (DRAC) Database Management System (DBMS) for Algorithmic Trade with Staging and Data Cleaning{*}\\
+
+
+\footnotesize
+
+
+\thanks{We would like to acknowledge and thank the Computer Science Department and Grants in Aid fund \cite{OCGIA} at Okanagan College for supporting our research.}
+} 
+\author{
+
+    \IEEEauthorblockN{Kristina Cormier}
+    \IEEEauthorblockA{\textit{Computer Science} \\
+    \textit{Okanagan College}\\
+    Kelowna, Canada \\
+    0009-0004-3783-9704}
+    
+    \and
+
+    \IEEEauthorblockN{Helana Jaraiseh}
+    \IEEEauthorblockA{\textit{Computing Science} \\
+    \textit{UFV}\\
+    Abbotsford, BC, Canada \\
+    0009-0000-1239-2820}
+    
+    \and
+    
+    \IEEEauthorblockN{Justin Drenka}
+    \IEEEauthorblockA{\textit{Computer Science} \\
+    \textit{UBCO}\\
+    Kelowna, Canada \\
+    0000-0000-0000-0000}
+    
+    \and    
+
+    \IEEEauthorblockN{Minami Sato}
+    \IEEEauthorblockA{\textit{Computer Science} \\
+    \textit{UBCO}\\
+    Kelowna, Canada \\
+    0000-0000-0000-0000}
+
+    \linebreakand
+ 
+    \IEEEauthorblockN{Brandon Hay}
+    \IEEEauthorblockA{\textit{Computer Science} \\
+    \textit{Okanagan College}\\
+    Kelowna, Canada \\
+    0009-0001-6605-6037}
+
+    \and
+    
+    \IEEEauthorblockN{James Midtdal}
+    \IEEEauthorblockA{\textit{Computer Science} \\
+    \textit{Okanagan College}\\
+    Kelowna, Canada \\
+    0009-0005-6312-569X}
+    
+    \and
+
+    \IEEEauthorblockN{Youry Khmelevsky}
+    \IEEEauthorblockA{\textit{Computer Science} \\
+    \textit{Okanagan College}\\
+    Kelowna, Canada \\
+    0000-0002-6837-3490}
+    
+    \and
+    
+    \IEEEauthorblockN{Ga\'etan Hains}
+    \IEEEauthorblockA{ \textit{LACL} \\
+    \textit{Université Paris-Est}\\
+    Créteil, France \\
+    0000-0002-1687-8091} 
+    
+    \and   
+    
+    \IEEEauthorblockN{Albert Wong}   \IEEEauthorblockA{\textit{Mathematics and Statistics} 
+    \\ \textit{Langara College}\\
+    Vancouver, Canada \\
+    0000-0002-0669-4352}
+}
+
+\maketitle
+
+\begin{abstract}
+Short-term stock market predictions using machine learning (ML) and artificial intelligence (AI) decrease the chance of human error and biased opinions. They can also detect patterns and work with large and complex datasets.  
+ 
+\end{abstract}
+
+
+
+\section{Introduction}
+This project explores the staging and cleaning of data for machine learning (ML) using the Database Management System (DBMS) provided by the Digital Research Alliance of Canada Alliance Cloud Connect Pilot. This project is broken into phases. Our first phase involves extracting and cleaning data for our staging table. Data will be extracted from the Financial Model Prep (FMP) every 5 minutes, loaded into the database, and aggregated from every 5 minutes to every hour in our staging table. The next phase focuses on data modelling, and after that, the focus will be on training the ML model.
+
+The main contributions of this paper are (1) a new approach implementation environment for Big Data ML and AI; (2) discussion about difference between ETL and ELT process and confirming operational ELT process effectiveness in research project at post-secondary institutions; and (3) the design and testing of a new API for direct access to the DBMS from the core subsystem from technological point of view. 
+
+\section{Background}
+Collecting data to train ML models requires extremely large sets of data. During this phase, we are collecting 2 years worth of data for Stocks, Bonds, Indexes, and Commodities. Future work involves collecting 30 years worth of data. This project focuses on S\&P 500 for stock data. That means we are collecting over 500 records every 5 minutes, which is over 6000 records per hour. Data is collected for approximately 10 hours per day, which means over 60,000 records are inserted daily. That would be approximately 300,000 records for a 5 day work week and over 15,000,000 records per year. That is just Stocks for one year. We also have records for Commodities, Bonds, and Indexes to add to that. For that reason, we need access to multiple resources. 
+
+Fortunately, we have qualified for the Alliance Cloud Connect Pilot through DRAC, which allocates 200 core-years on the NIBI-compute system, 20.0 RGU-years on the nibi-gpu system, and 59 TB of project storage on the NIBI storage system for High Performance Computing (HPC). It also allocates 16 VCPU-years, 4 Number of cloud instances, 32 GB of RAM, 7 volumes, 7 snapshots, 2 Floating IP addresses, 60,000 GB of cloud volume and snapshot storage of Cloud allocations on the Arbutus-persistent-cloud system. 
+
+\section{Theoretical framework}
+
+
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.45\textwidth]{images/db-architecture.png}
+\caption{Database Architecture and Design}
+\label{fig: Database Architecture and Design}
+\end{figure}
+
+As shown in Fig.~\ref{fig:dw_design}, the database schema is containerized, can be shared, and is flexible for future growth...
+ 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{images/system-architecture.png}
+    \caption{System Architecture and Design}
+    \label{fig: System Architecture and Design}
+\end{figure}
+
+The illustration shown in Fig.~\ref{fig: ETL-Workflow-2} depicts the overall architecture and design of the system.
+
+
+
+
+
+\section{Discussion of validation and results}
+
+
+\section{Literature review}
+Existing work here - minimum of 15-25 references. Better to have a few more.
+
+Summarize the main idea and results. Reference the primary author and year for each.
+
+
+\section{Future Works}
+
+\setlength{\fboxrule}{2pt}
+
+
+
+\section{CONCLUSION}
+
+
+
+\section*{ACKNOWLEDGMENTS}
+Youry K (COSC OC), Raymon L (COMP UBCO), Halia V (Dean COSC OC). Several students from OC, UBCO, and UFV have contributed to a previous part of this project, which led to this study. We thank all of them for their contributions. 
+
+
+\balance
+
+\bibliographystyle{IEEEtran}
+
+\bibliography{2AlgorithmicTr.bib, 2tempBIB.bib, WCCCE23.bib, 1tempBIB.bib}
+
+\end{document}
